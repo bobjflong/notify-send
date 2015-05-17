@@ -13,10 +13,10 @@ module System.NotifySend (
     commandOptions
   ) where
 
-import           Control.Lens    hiding (elements)
-import           Data.Char
-import           Data.Text       hiding (map, toLower)
-import qualified Data.Text       as T
+import           Control.Lens           hiding (elements)
+import           Control.Monad.IO.Class
+import           Data.Text              hiding (map, toLower)
+import qualified Data.Text              as T
 import           Shelly
 import           Test.QuickCheck
 
@@ -56,11 +56,12 @@ defaultNotification :: Command
 defaultNotification = Command blank blank 1000 Low " "
   where blank = " " :: Text
 
--- | Send the notification via the "notify-send" command. This no-ops if notify-send is not found.
-notifySend command = shelly $ verbosely $ do
-  path <- which name
-  case path of
-    Just _ -> notify_send (commandOptions command) (command ^. summary) (command ^. body)
+-- | Send the notification via the @notify-send@ command. This no-ops if notify-send is not found.
+notifySend :: MonadIO m => Command -> m Text
+notifySend send = shelly $ verbosely $ do
+  notifyPath <- which name
+  case notifyPath of
+    Just _ -> notify_send (commandOptions send) (send ^. summary) (send ^. body)
     Nothing -> return ""
   where notify_send opts s b = run name (opts ++ [s,b])
         name = "notify-send"

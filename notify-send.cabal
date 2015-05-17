@@ -20,11 +20,13 @@ library
   exposed-modules:     System.NotifySend
   -- other-modules:
   -- other-extensions:
+  ghc-options:         -Wall
   build-depends:       base < 5
                        , lens
                        , shelly
                        , text
                        , QuickCheck
+                       , transformers
   hs-source-dirs:      src
   default-language:    Haskell2010
 
