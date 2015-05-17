@@ -56,7 +56,7 @@ defaultNotification :: Command
 defaultNotification = Command blank blank 1000 Low " "
   where blank = " " :: Text
 
--- | Send the notification via the notify-send option. This no-ops if notify-send is not found.
+-- | Send the notification via the "notify-send" command. This no-ops if notify-send is not found.
 notifySend command = shelly $ verbosely $ do
   path <- which name
   case path of
