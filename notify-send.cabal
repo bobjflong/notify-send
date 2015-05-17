@@ -1,0 +1,45 @@
+name:                notify-send
+version:             0.1.0.0
+synopsis:            Interface with notify-send
+description:         Minimalist bridge to the notify-send command
+license:             MIT
+license-file:        LICENSE
+author:              Bob Long
+maintainer:          robertjflong@gmail.com
+-- copyright:
+category:            System
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+source-repository head
+  type: git
+  location: https://github.com/bobjflong/notify-send.git
+
+library
+  exposed-modules:     System.NotifySend
+  -- other-modules:
+  -- other-extensions:
+  build-depends:       base < 5
+                       , lens
+                       , shelly
+                       , text
+                       , QuickCheck
+  hs-source-dirs:      src
+  default-language:    Haskell2010
+
+test-suite tests
+  ghc-options:         -Wall
+  type:                exitcode-stdio-1.0
+  main-is:             Tests.hs
+  hs-source-dirs:      test
+
+  build-depends:       base
+                       , notify-send
+                       , text
+                       , hspec
+                       , QuickCheck
+                       , lens
+                       , text
+  default-language:    Haskell2010
+
